@@ -111,7 +111,7 @@ const DashboardLayout = () => {
         <Divider />
         <List>
           <ListItem disablePadding>
-            <ListItemButton href="/employee/personal-info">
+            <ListItemButton href="/employee/datos-basicos">
               <ListItemIcon>
                 <BadgeOutlinedIcon />
               </ListItemIcon>

@@ -16,10 +16,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useLocation } from "react-router";
+import { datosBasicosSchema } from "../../datos-basicos/types/schema";
+import { useDatosBasicosStore } from "../../datos-basicos/hooks/useStore";
 
 const Stepper = () => {
   const { pathname } = useLocation();
 
+  const { formData: datosBasicosFormData } = useDatosBasicosStore();
   const { formData: employeePersonalInfoFormData } =
     useEmployeePersonalInfoStore();
   const { formData: employeeHistoryFormData } = useEmployeeHistoryStore();
@@ -30,6 +33,9 @@ const Stepper = () => {
     formData: employeeReviewFormData,
     isSubmitted: isEmployeeReviewSubmitted,
   } = useEmployeeReviewStore();
+
+  const { success: datosBasicosSuccess } =
+    datosBasicosSchema.safeParse(datosBasicosFormData);
 
   const { success: employeePersonaInfoSuccess } =
     employeePersonalInfoSchema.safeParse(employeePersonalInfoFormData);
@@ -50,6 +56,12 @@ const Stepper = () => {
   );
 
   const steps = [
+    {
+      href: "/employee/datos-basicos",
+      label: "BLE Basic data",
+      success: datosBasicosSuccess,
+      /* success: employeePersonaInfoSuccess, */
+    },
     {
       href: "/employee/personal-info",
       label: d.personalInfo,

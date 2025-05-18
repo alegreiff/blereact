@@ -15,6 +15,7 @@ type FormatType =
   | "phoneNumber"
   | "currency"
   | "socialSecurity"
+  | "nitNumber"
   | undefined;
 
 type CustomNumberFormatProps = InputBaseComponentProps & {
@@ -75,6 +76,12 @@ const formatComponents = {
     allowEmptyFormatting: true,
     mask: "_",
   }),
+  nitNumber: createNumberFormat({
+    format: "###.###.###-#",
+    allowEmptyFormatting: true,
+    mask: "_",
+  }),
+
   socialSecurity: createNumberFormat({
     format: "### ## ####",
     allowEmptyFormatting: true,

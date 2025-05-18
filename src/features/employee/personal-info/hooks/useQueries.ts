@@ -1,13 +1,14 @@
 import { Schema } from "@/features/employee/personal-info/types/schema";
 import {
-  getCities,
+  getTipoVinculacion, getCities,
   getStates,
-  getCasos, getTiposPersona, getTipoVinculacion
 } from "@/features/employee/personal-info/utils/api";
-import { useFormContext } from "@/features/form/hooks/useFormContext";
 import { useQuery } from "@tanstack/react-query";
-import { useWatch } from "react-hook-form";
 
+import { useFormContext } from "@/features/form/hooks/useFormContext";
+
+import { useWatch } from "react-hook-form";
+import { getPais } from "@/features/employee/datos-basicos/utils/api";
 
 const useVinculacion = () => {
   return useQuery({
@@ -17,38 +18,48 @@ const useVinculacion = () => {
 };
 
 
+const usePais = () => {
+  return useQuery({
+    queryKey: ["pais"],
+
+    queryFn: getPais,
+  });
+};
+
+
 const useStates = () => {
   return useQuery({
     queryKey: ["states"],
+
+    queryFn: getStates,
+  });
+};
+const useStatesRes = () => {
+  return useQuery({
+    queryKey: ["states"],
+
     queryFn: getStates,
   });
 };
 
-
-const useCasos = () => {
-  return useQuery({
-    queryKey: ["casos"],
-    queryFn: getCasos,
-  });
-};
-
-const useTiposPersona = () => {
-  return useQuery({
-    queryKey: ["tipoPersona"],
-    queryFn: getTiposPersona,
-  });
-};
-
-
-
 const useCities = () => {
   const { control } = useFormContext<Schema>();
-  const state = useWatch({ control, name: "state" });
+  const state = useWatch({ control, name: "departamentoNacimiento" });
 
   return useQuery({
-    queryKey: ["cities", { state }],
+    queryKey: ["municipioNacimiento", { state }],
     queryFn: () => getCities(state),
   });
 };
 
-export { useStates, useCities, useCasos, useTiposPersona, useVinculacion };
+const useCitiesRes = () => {
+  const { control } = useFormContext<Schema>();
+  const state = useWatch({ control, name: "departamentoResidencia" }) || "";
+
+  return useQuery({
+    queryKey: ["municipioResidencia", { state }],
+    queryFn: () => getCities(state),
+  });
+};
+
+export { useVinculacion, useStates, useCities, usePais, useStatesRes, useCitiesRes }; 

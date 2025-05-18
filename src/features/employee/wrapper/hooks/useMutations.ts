@@ -7,8 +7,13 @@ import { create } from "@/features/employee/wrapper/utils/api";
 import { getErrorMessage } from "@/utils/getErrorMessage";
 import { showSnack } from "@/utils/showSnack";
 import { useMutation } from "@tanstack/react-query";
+import { useDatosBasicosStore } from "@/features/employee/datos-basicos/hooks/useStore";
 
 const useCreate = () => {
+
+  const { formData: datosBasicosFormData } =
+    useDatosBasicosStore();
+
   const { formData: employeePersonalInfoFormData } =
     useEmployeePersonalInfoStore();
   const { formData: employeeHistoryFormData } = useEmployeeHistoryStore();
@@ -20,6 +25,7 @@ const useCreate = () => {
   return useMutation({
     mutationFn: () =>
       create({
+        ...datosBasicosFormData,
         ...employeePersonalInfoFormData,
         ...employeeHistoryFormData,
         ...employeeSkillsFormData,

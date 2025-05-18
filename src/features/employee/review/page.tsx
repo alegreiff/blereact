@@ -56,7 +56,7 @@ const Provider = ({ readOnly }: ProviderProps) => {
 
   const handleSubmit: SubmitHandler<Schema> = (data) => {
     updateFormData(data);
-    console.log("DATA", formData);
+
     updateSummaryDialogOpen(true);
     updateIsSubmitted(true);
   };

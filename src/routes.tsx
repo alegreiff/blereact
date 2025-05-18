@@ -6,6 +6,7 @@ import { EmployeeSkills } from "@/features/employee/skills/page";
 import { EmployeeWrapper } from "@/features/employee/wrapper/page";
 import { DashboardLayout } from "@/features/layout/components/dashboard-layout";
 import { BrowserRouter, Route, Routes } from "react-router";
+import { DatosBasicos } from "./features/employee/datos-basicos/page";
 
 const RoutesWrapper = () => {
   return (
@@ -13,6 +14,7 @@ const RoutesWrapper = () => {
       <Routes>
         <Route path="/" element={<DashboardLayout />}>
           <Route path="/employee" element={<EmployeeWrapper />}>
+            <Route path="/employee/datos-basicos" element={<DatosBasicos />} />
             <Route
               path="/employee/personal-info"
               element={<EmployeePersonalInfo />}

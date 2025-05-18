@@ -26,10 +26,14 @@ import {
 } from "@mui/material";
 import { FormEvent } from "react";
 import { d } from "@/utils/dictionary";
+import { DatosBasicos } from "../../datos-basicos/page";
+import { useDatosBasicosStore } from "../../datos-basicos/hooks/useStore";
 
 const SummaryDialog = () => {
   const { summaryDialogOpen, updateSummaryDialogOpen } = useStore();
   const createMutation = useCreate();
+
+  const { formData: datosBasicosFormData } = useDatosBasicosStore();
 
   const { formData: employeePersonalInfoFormData } =
     useEmployeePersonalInfoStore();
@@ -40,6 +44,7 @@ const SummaryDialog = () => {
   const { formData: employeeReviewFormData } = useEmployeeReviewStore();
 
   const allFormData = {
+    ...datosBasicosFormData,
     ...employeePersonalInfoFormData,
     ...employeeHistoryFormData,
     ...employeeSkillsFormData,
@@ -66,7 +71,7 @@ const SummaryDialog = () => {
   return (
     <Dialog
       open={summaryDialogOpen}
-      component="form"
+      component="div"
       onSubmit={onSubmit}
       fullWidth
       maxWidth="md"
@@ -74,9 +79,11 @@ const SummaryDialog = () => {
     >
       <DialogTitle variant="h5">{d.confirmInformation}</DialogTitle>
       <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+        {JSON.stringify(allFormData, null, 2)}
         <EmployeePersonalInfo readOnly />
         <Divider />
-
+        <DatosBasicos readOnly />
+        <Divider />
         <EmployeeHistory readOnly />
         <Divider />
         <EmployeeSkills readOnly />
